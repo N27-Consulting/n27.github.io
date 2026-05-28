@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RDTI Pipeline by N27 Consulting — R&D Tax Incentive Documentation, Automated</title>
+<meta name="description" content="An AI documentation agent built for R&D Tax Incentive consulting firms. Draft, fact-check and assemble compliant applications in a fraction of the time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&family=Archivo:wght@300;400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── N27 BRAND TOKENS ──────────────────────────────────────── */
+:root{
+  --pine:        #0A4227;
+  --pine-deep:   #06301C;
+  --pine-bright: #1A6B43;
+  --pine-tint:   #E9F0EC;
+  --charcoal:    #26282A;
+  --ink:         #16181A;
+  --pewter:      #959595;
+  --steel:       #6E7174;
+  --concrete:    #C9CACB;
+  --mist:        #E9EAEB;
+  --paper:       #F4F4F3;
+  --paper-warm:  #EFEDE7;
+  --white:       #FFFFFF;
+  --display:     "Arsenal", "Optima", "Candara", "Gill Sans", sans-serif;
+  --sans:        "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono:        "Spline Sans Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --maxw:        1440px;
+  --rule:        1px solid rgba(38,40,42,.12);
+  --rule-soft:   1px solid rgba(38,40,42,.07);
+  --gutter:      clamp(20px, 3.5vw, 56px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--charcoal);
+  font-size:17px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4{
+  font-family:var(--display);
+  font-weight:400;
+  line-height:1;
+  letter-spacing:-0.015em;
+  color:var(--charcoal);
+}
+em, .it{font-style:italic;font-family:var(--display)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+
+/* ─── EDITORIAL UTILITIES ───────────────────────────────────── */
+.label{
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--pine);
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+}
+.label::before{
+  content:"";
+  display:inline-block;
+  width:28px;
+  height:1.5px;
+  background:var(--pine);
+  flex:none;
+}
+
+/* chapter marker — big editorial section number */
+.chapter{
+  display:flex;
+  align-items:baseline;
+  gap:24px;
+  padding-bottom:36px;
+  margin-bottom:56px;
+  border-bottom:var(--rule);
+}
+.chapter-no{
+  font-family:var(--display);
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(2.2rem,4vw,3.4rem);
+  line-height:1;
+  color:var(--pine);
+  letter-spacing:-.02em;
+}
+.chapter-no sup{
+  font-family:var(--mono);
+  font-style:normal;
+  font-size:.28em;
+  letter-spacing:.18em;
+  vertical-align:super;
+  color:var(--pewter);
+  margin-left:6px;
+}
+.chapter-meta{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--steel);
+  padding-bottom:4px;
+}
+
+/* ─── BUTTONS ───────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 28px;
+  font-family:var(--sans);font-size:14px;font-weight:500;letter-spacing:.01em;
+  border:none;cursor:pointer;
+  transition:background .25s,transform .2s,box-shadow .25s,border-color .25s;
+  position:relative;
+}
+.btn svg{transition:transform .3s}
+.btn:hover svg{transform:translateX(4px)}
+.btn-primary{background:var(--pine);color:var(--white)}
+.btn-primary:hover{background:var(--pine-deep);transform:translateY(-1px);box-shadow:0 12px 32px rgba(10,66,39,.22)}
+.btn-ghost{background:transparent;color:var(--charcoal);border:1px solid var(--concrete)}
+.btn-ghost:hover{border-color:var(--charcoal);background:var(--white)}
+.btn-link{
+  background:none;border:none;padding:0;
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--charcoal);display:inline-flex;align-items:center;gap:10px;
+  border-bottom:1px solid var(--charcoal);padding-bottom:4px;cursor:pointer;
+  transition:color .2s,border-color .2s;
+}
+.btn-link:hover{color:var(--pine);border-color:var(--pine)}
+
+/* ─── NAV ───────────────────────────────────────────────────── */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(244,244,243,.85);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid transparent;
+  transition:border-color .35s, background .35s;
+}
+header.scrolled{
+  border-bottom:var(--rule);
+  background:rgba(244,244,243,.94);
+}
+nav{display:flex;align-items:center;justify-content:space-between;height:78px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-mark{
+  width:38px;height:38px;background:var(--pine);
+  display:flex;align-items:center;justify-content:center;flex:none;
+  transition:transform .35s;
+}
+.brand:hover .brand-mark{transform:rotate(-4deg)}
+.brand-name{
+  font-family:var(--display);font-weight:400;font-size:1.3rem;
+  letter-spacing:-0.01em;color:var(--charcoal);
+}
+.brand-name sup{
+  font-family:var(--display);font-size:.62em;
+  color:var(--pewter);vertical-align:super;line-height:0;
+}
+.brand-sub{
+  font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--pewter);
+  padding-left:12px;margin-left:4px;
+  border-left:1px solid var(--concrete);
+}
+.navlinks{display:flex;gap:36px;align-items:center}
+.navlinks a:not(.btn){
+  font-size:.86rem;font-weight:400;color:var(--steel);
+  font-family:var(--sans);letter-spacing:.01em;
+  position:relative;padding:4px 0;
+  transition:color .2s;
+}
+.navlinks a:not(.btn)::after{
+  content:"";position:absolute;bottom:0;left:0;
+  width:0;height:1px;background:var(--pine);transition:width .3s;
+}
+.navlinks a:not(.btn):hover{color:var(--charcoal)}
+.navlinks a:not(.btn):hover::after{width:100%}
+.navtoggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.navtoggle span{width:24px;height:1.5px;background:var(--charcoal);display:block;transition:.3s}
+
+/* ─── HERO ──────────────────────────────────────────────────── */
+.hero{
+  position:relative;
+  padding:96px 0 120px;
+  overflow:hidden;
+}
+.hero::before{
+  /* architectural vertical rhythm right side */
+  content:"";
+  position:absolute;
+  right:0;top:0;bottom:0;
+  width:48%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,transparent 39px,
+      rgba(38,40,42,.05) 39px,rgba(38,40,42,.05) 40px
+    );
+  pointer-events:none;
+  mask:linear-gradient(to bottom, transparent, #000 15%, #000 85%, transparent);
+  -webkit-mask:linear-gradient(to bottom, transparent, #000 15%, #000 85%, transparent);
+}
+
+.hero-top{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:64px;
+  position:relative;z-index:2;
+}
+.hero-issue{
+  font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--steel);display:flex;gap:18px;align-items:center;
+}
+.hero-issue b{color:var(--charcoal);font-weight:500}
+.hero-issue::before{
+  content:"";width:36px;height:1px;background:var(--charcoal);
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.15fr 1fr;
+  gap:80px;
+  align-items:start;
+  position:relative;z-index:2;
+}
+
+.hero h1{
+  font-size:clamp(2.6rem, 5.4vw, 5rem);
+  font-weight:300;
+  line-height:.98;
+  letter-spacing:-.028em;
+  color:var(--charcoal);
+  margin:24px 0 0;
+}
+.hero h1 .hl{
+  font-style:italic;
+  font-weight:400;
+  color:var(--pine);
+}
+.hero h1 strong{font-weight:500;color:var(--charcoal)}
+
+.hero .lede{
+  font-size:19px;font-weight:300;
+  color:var(--steel);
+  margin:36px 0 44px;
+  max-width:44ch;
+  line-height:1.55;
+}
+.hero .lede em{color:var(--charcoal)}
+
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+.hero-meta{
+  margin-top:40px;
+  padding-top:28px;
+  border-top:var(--rule);
+  display:flex;
+  gap:48px;
+  flex-wrap:wrap;
+}
+.hero-meta-item{}
+.hero-meta-item b{
+  display:block;
+  font-family:var(--display);
+  font-weight:400;
+  font-size:1.4rem;
+  letter-spacing:-.01em;
+  color:var(--charcoal);
+  margin-bottom:2px;
+}
+.hero-meta-item span{
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--pewter);
+}
+
+/* ─── HERO VISUAL — Audit ledger card ──────────────────────── */
+.hero-visual{
+  position:relative;
+}
+.hv-frame{
+  background:var(--white);
+  border:var(--rule);
+  position:relative;
+  box-shadow:0 30px 80px -40px rgba(38,40,42,.18), 0 4px 24px -16px rgba(38,40,42,.08);
+}
+.hv-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 20px;
+  border-bottom:var(--rule);
+  background:var(--paper);
+}
+.hv-dots{display:flex;gap:5px}
+.hv-dots span{width:8px;height:8px;border:1px solid var(--concrete);border-radius:50%}
+.hv-dots span:nth-child(1){background:var(--concrete);border-color:var(--concrete)}
+.hv-filename{
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--steel);
+}
+.hv-status{
+  font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--pine);display:flex;align-items:center;gap:6px;
+}
+.hv-status::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:var(--pine);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1}
+  50%{opacity:.4}
+}
+
+.hv-body{padding:26px 24px}
+.hv-section{margin-bottom:22px}
+.hv-section:last-child{margin-bottom:0}
+.hv-section-label{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--pewter);margin-bottom:10px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.hv-section-label b{color:var(--pine);font-weight:500}
+.hv-line{
+  height:6px;background:var(--mist);margin-bottom:8px;
+}
+.hv-line.w-full{width:100%}
+.hv-line.w-90{width:90%}
+.hv-line.w-72{width:72%}
+.hv-line.w-65{width:65%}
+.hv-line.w-50{width:50%}
+.hv-audit{
+  padding:8px 0 8px 14px;
+  border-left:2px solid var(--pine);
+  margin-top:10px;display:flex;align-items:center;gap:10px;
+  background:linear-gradient(to right, rgba(10,66,39,.04), transparent);
+}
+.hv-audit-tick{
+  width:14px;height:14px;border:1.5px solid var(--pine);
+  display:flex;align-items:center;justify-content:center;flex:none;
+}
+.hv-audit-tick svg{display:block}
+.hv-audit-text{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;
+  color:var(--steel);
+}
+.hv-audit-text b{color:var(--charcoal);font-weight:500}
+
+.hv-foot{
+  padding:14px 20px;
+  border-top:var(--rule);
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--paper);
+}
+.hv-foot-text{
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--steel);
+}
+.hv-foot-link{
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--pine);display:flex;align-items:center;gap:6px;
+}
+
+/* floating annotation */
+.hv-annot{
+  position:absolute;
+  right:-12px;top:38%;
+  background:var(--charcoal);
+  color:var(--white);
+  padding:10px 14px;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;
+  box-shadow:0 12px 32px -12px rgba(38,40,42,.4);
+  z-index:3;
+}
+.hv-annot::after{
+  content:"";position:absolute;left:-6px;top:50%;
+  width:6px;height:1px;background:var(--charcoal);transform:translateY(-50%);
+}
+
+/* ─── STATS BAND (animated counters) ────────────────────────── */
+.stats{
+  background:var(--charcoal);
+  padding:80px 0;
+  position:relative;
+  overflow:hidden;
+}
+.stats::before{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    90deg,
+    transparent,transparent 52px,
+    rgba(255,255,255,.025) 52px,rgba(255,255,255,.025) 53px
+  );
+  pointer-events:none;
+}
+.stats-head{
+  display:flex;justify-content:space-between;align-items:end;
+  margin-bottom:48px;flex-wrap:wrap;gap:24px;position:relative;
+}
+.stats-head .label{color:rgba(255,255,255,.5)}
+.stats-head .label::before{background:rgba(255,255,255,.4)}
+.stats-head h3{
+  font-family:var(--display);font-weight:300;
+  font-size:clamp(1.4rem,2.2vw,2rem);
+  color:var(--white);letter-spacing:-.01em;
+  max-width:34ch;line-height:1.15;
+}
+.stats-head h3 em{color:var(--pine-tint);font-weight:400}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+  border-top:1px solid rgba(255,255,255,.12);
+  position:relative;
+}
+.stat-cell{
+  padding:42px 28px 36px;
+  border-right:1px solid rgba(255,255,255,.08);
+  position:relative;
+}
+.stat-cell:last-child{border-right:none}
+.stat-cell::before{
+  content:"";position:absolute;top:-1px;left:0;
+  width:48px;height:2px;background:var(--pine);
+}
+.stat-num{
+  font-family:var(--display);
+  font-weight:300;
+  font-size:clamp(3rem,5vw,4.6rem);
+  line-height:.95;
+  letter-spacing:-.03em;
+  color:var(--white);
+  margin-bottom:14px;
+  display:block;
+}
+.stat-num .unit{
+  font-size:.45em;color:var(--pewter);font-weight:400;letter-spacing:0;margin-left:4px;
+  font-style:italic;
+}
+.stat-num.italic{font-style:italic;color:var(--pine-tint)}
+.stat-cell-label{
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);margin-bottom:10px;
+}
+.stat-cell-desc{
+  font-size:14px;color:rgba(255,255,255,.62);line-height:1.5;
+  max-width:24ch;
+}
+
+/* ─── SECTIONS ──────────────────────────────────────────────── */
+.sec{padding:120px 0;position:relative}
+.sec-head{
+  max-width:680px;
+  margin-bottom:64px;
+}
+.sec-head h2{
+  font-size:clamp(2.2rem,4.4vw,3.6rem);
+  font-weight:300;
+  margin-top:20px;
+  letter-spacing:-.022em;
+  line-height:1;
+}
+.sec-head h2 em{color:var(--pine);font-weight:400}
+.sec-head p{
+  font-size:18px;font-weight:300;color:var(--steel);
+  margin-top:24px;line-height:1.55;max-width:54ch;
+}
+
+/* ─── PROBLEM (DARK) ────────────────────────────────────────── */
+.problem{background:var(--ink);color:var(--white)}
+.problem .label{color:rgba(255,255,255,.45)}
+.problem .label::before{background:rgba(255,255,255,.4)}
+.problem .chapter{border-bottom-color:rgba(255,255,255,.1)}
+.problem .chapter-meta{color:rgba(255,255,255,.45)}
+.problem .chapter-no{color:var(--pine-bright)}
+.problem .chapter-no sup{color:rgba(255,255,255,.4)}
+.problem h2{color:var(--white)}
+.problem h2 em{color:var(--pine-bright)}
+.problem .sec-head p{color:rgba(255,255,255,.55)}
+
+.prob-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+  border-top:1px solid rgba(255,255,255,.1);
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.prob-card{
+  padding:44px 36px 48px;
+  border-right:1px solid rgba(255,255,255,.07);
+  position:relative;
+  transition:background .35s;
+}
+.prob-card:last-child{border-right:none}
+.prob-card::before{
+  content:"";position:absolute;top:0;left:0;
+  width:0;height:2px;background:var(--pine-bright);
+  transition:width .5s cubic-bezier(.2,.7,.2,1);
+}
+.prob-card:hover{background:rgba(255,255,255,.02)}
+.prob-card:hover::before{width:100%}
+
+.prob-num{
+  font-family:var(--display);font-style:italic;font-weight:400;
+  font-size:2.2rem;line-height:1;
+  color:var(--pine-bright);margin-bottom:22px;
+  letter-spacing:-.02em;
+}
+.prob-card h3{
+  font-family:var(--display);font-weight:400;
+  font-size:1.5rem;line-height:1.1;
+  letter-spacing:-.015em;color:var(--white);margin-bottom:16px;
+}
+.prob-card p{font-size:15.5px;color:rgba(255,255,255,.55);line-height:1.6;margin:0}
+
+/* pull-quote inside dark section */
+.prob-pull{
+  margin-top:80px;
+  padding:48px 0 0;
+  border-top:1px solid rgba(255,255,255,.1);
+  display:grid;grid-template-columns:1fr 2fr;gap:48px;
+}
+.prob-pull .label{color:rgba(255,255,255,.4)}
+.prob-pull blockquote{
+  font-family:var(--display);font-style:italic;font-weight:300;
+  font-size:clamp(1.4rem,2.4vw,2rem);line-height:1.25;
+  color:var(--white);letter-spacing:-.012em;
+}
+.prob-pull blockquote::before{content:"\201C";color:var(--pine-bright);margin-right:.1em}
+.prob-pull blockquote::after{content:"\201D";color:var(--pine-bright)}
+
+/* ─── HOW IT WORKS — refined pipeline ──────────────────────── */
+.pipeline{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+}
+/* connecting line */
+.pipeline::before{
+  content:"";position:absolute;
+  top:74px;left:11%;right:11%;height:1px;
+  background:linear-gradient(to right,transparent,var(--concrete) 8%,var(--concrete) 92%,transparent);
+}
+.pipe-step{
+  padding:32px 36px 32px 0;
+  position:relative;
+  background:var(--paper);
+}
+.pipe-step + .pipe-step{padding-left:36px;border-left:var(--rule)}
+
+.pipe-marker{
+  width:54px;height:54px;
+  background:var(--paper);
+  border:1.5px solid var(--pine);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-style:italic;font-weight:400;
+  font-size:1.4rem;color:var(--pine);
+  position:relative;z-index:2;
+  letter-spacing:-.01em;
+  margin-bottom:32px;
+  transition:background .3s, color .3s;
+}
+.pipe-step:hover .pipe-marker{background:var(--pine);color:var(--white)}
+
+.pipe-step-label{
+  font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--pine);margin-bottom:14px;
+}
+.pipe-step h3{
+  font-size:1.6rem;font-weight:400;margin-bottom:18px;letter-spacing:-.015em;line-height:1.05;
+}
+.pipe-step h3 em{color:var(--pine)}
+.pipe-step p{font-size:15.5px;color:var(--steel);line-height:1.62;max-width:36ch}
+.pipe-step-out{
+  margin-top:26px;padding-top:22px;border-top:var(--rule-soft);
+  display:flex;align-items:center;gap:12px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--charcoal);
+}
+.pipe-step-out::before{content:"\2192";color:var(--pine);font-size:14px}
+
+/* ─── CAPABILITIES ──────────────────────────────────────────── */
+.cap-wrap{background:var(--white)}
+.feat-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border-top:var(--rule);
+  border-left:var(--rule);
+}
+.feat{
+  background:var(--white);
+  padding:44px 36px 48px;
+  border-right:var(--rule);
+  border-bottom:var(--rule);
+  position:relative;
+  transition:background .3s;
+}
+.feat::before{
+  content:"";position:absolute;top:0;left:0;
+  width:0;height:2px;background:var(--pine);
+  transition:width .45s cubic-bezier(.2,.7,.2,1);
+}
+.feat:hover{background:var(--paper)}
+.feat:hover::before{width:100%}
+
+.feat-no{
+  font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--pewter);margin-bottom:24px;display:flex;align-items:center;gap:10px;
+}
+.feat-no b{color:var(--pine);font-weight:500}
+.feat-ic{margin-bottom:22px;width:32px;height:32px;display:flex;align-items:flex-end}
+.feat-ic svg{display:block}
+.feat h3{font-size:1.35rem;font-weight:400;letter-spacing:-.015em;margin-bottom:14px;line-height:1.1}
+.feat h3 em{color:var(--pine)}
+.feat p{font-size:15px;color:var(--steel);line-height:1.6}
+
+/* ─── OUTCOMES SPLIT ────────────────────────────────────────── */
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:80px;align-items:start}
+.checklist{list-style:none}
+.checklist li{
+  display:flex;gap:24px;
+  padding:26px 0;
+  border-bottom:var(--rule);
+  align-items:flex-start;
+}
+.checklist li:first-child{border-top:var(--rule)}
+.cl-mark{
+  width:32px;height:32px;
+  border:1.5px solid var(--pine);
+  display:flex;align-items:center;justify-content:center;flex:none;
+  margin-top:2px;
+  position:relative;
+  transition:background .3s;
+}
+.checklist li:hover .cl-mark{background:var(--pine)}
+.checklist li:hover .cl-mark svg path{stroke:var(--white)}
+.checklist h4{
+  font-family:var(--display);font-weight:400;
+  font-size:1.25rem;letter-spacing:-.012em;
+  color:var(--charcoal);margin-bottom:6px;line-height:1.15;
+}
+.checklist h4 em{color:var(--pine)}
+.checklist p{font-size:15px;color:var(--steel);margin:0;line-height:1.55;max-width:42ch}
+
+/* comparison panel */
+.comp-panel{
+  background:var(--white);
+  border:var(--rule);
+  position:relative;
+}
+.comp-head{
+  padding:20px 28px;
+  border-bottom:var(--rule);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.comp-head-label{
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--pewter);
+}
+.comp-head-meta{
+  font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--pine);
+}
+.comp-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 28px;border-bottom:var(--rule-soft);
+  gap:24px;
+}
+.comp-row:last-child{border-bottom:none}
+.comp-row > span:first-child{
+  font-size:14px;color:var(--charcoal);font-weight:400;
+}
+.comp-vals{display:flex;gap:18px;align-items:center}
+.comp-before{
+  color:var(--concrete);text-decoration:line-through;
+  font-size:12.5px;font-family:var(--mono);letter-spacing:.04em;
+}
+.comp-after{
+  color:var(--pine);font-weight:400;
+  font-family:var(--display);font-style:italic;
+  font-size:1.15rem;letter-spacing:-.01em;
+}
+
+/* ─── DISCIPLINE BAND ───────────────────────────────────────── */
+.band{
+  background:var(--charcoal);
+  padding:120px 0;
+  position:relative;
+  overflow:hidden;
+}
+.band::before{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    90deg,
+    transparent,transparent 60px,
+    rgba(255,255,255,.022) 60px,rgba(255,255,255,.022) 61px
+  );
+  pointer-events:none;
+}
+.band-inner{display:grid;grid-template-columns:1fr 1.05fr;gap:96px;align-items:center;position:relative;z-index:2}
+.band h2{
+  font-weight:300;
+  font-size:clamp(2rem,3.4vw,3rem);
+  color:var(--white);
+  letter-spacing:-.02em;
+  line-height:1.05;
+}
+.band h2 em{color:var(--pine-tint);font-weight:400}
+.band p{
+  font-size:17px;font-weight:300;color:rgba(255,255,255,.6);
+  margin-top:24px;line-height:1.6;max-width:48ch;
+}
+.band .label{color:rgba(255,255,255,.5)}
+.band .label::before{background:rgba(255,255,255,.4)}
+.tag-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0;
+  border-top:1px solid rgba(255,255,255,.1);
+  border-left:1px solid rgba(255,255,255,.1);
+}
+.tag{
+  border-right:1px solid rgba(255,255,255,.1);
+  border-bottom:1px solid rgba(255,255,255,.1);
+  padding:18px 20px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.65);
+  display:flex;align-items:center;gap:12px;
+  transition:background .3s, color .3s;
+}
+.tag::before{
+  content:"";width:6px;height:6px;background:var(--pine-bright);
+  flex:none;
+}
+.tag:hover{background:rgba(255,255,255,.025);color:var(--white)}
+
+/* ─── WHO ───────────────────────────────────────────────────── */
+.who-wrap{background:var(--paper-warm);position:relative}
+.who-wrap::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:1px;background:var(--concrete);
+}
+.who-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;
+}
+.who{
+  padding:48px 36px 56px;
+  border-right:var(--rule);
+  position:relative;
+  transition:transform .3s;
+}
+.who:last-child{border-right:none}
+.who::before{
+  content:"";position:absolute;top:0;left:0;
+  width:36px;height:2px;background:var(--pine);
+}
+.who-no{
+  font-family:var(--display);font-style:italic;font-weight:400;
+  font-size:1.4rem;color:var(--pine);margin-bottom:24px;
+  letter-spacing:-.01em;line-height:1;
+}
+.who h3{
+  font-size:1.4rem;font-weight:400;letter-spacing:-.015em;
+  margin-bottom:14px;line-height:1.1;
+}
+.who p{font-size:15px;color:var(--steel);line-height:1.6;max-width:32ch}
+
+/* ─── FAQ ───────────────────────────────────────────────────── */
+.faq-wrap{max-width:880px;margin:0 auto;border-top:var(--rule)}
+.qa button{
+  width:100%;text-align:left;background:none;border:none;
+  border-bottom:var(--rule);
+  padding:32px 0;
+  display:flex;justify-content:space-between;align-items:center;gap:32px;
+  cursor:pointer;
+  font-family:var(--display);font-size:clamp(1.15rem,1.5vw,1.4rem);font-weight:400;
+  letter-spacing:-.012em;color:var(--charcoal);line-height:1.2;
+  transition:color .25s;
+}
+.qa button:hover{color:var(--pine)}
+.qicon{
+  flex:none;width:22px;height:22px;position:relative;
+}
+.qicon::before,.qicon::after{
+  content:"";position:absolute;background:var(--pine);transition:transform .3s, opacity .3s;
+}
+.qicon::before{width:14px;height:1.5px;top:10px;left:4px}
+.qicon::after{width:1.5px;height:14px;top:4px;left:10px}
+.qa.open .qicon::after{transform:rotate(90deg);opacity:0}
+.ans{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.ans-inner{padding:4px 0 32px;max-width:60ch}
+.ans p{
+  font-size:16px;font-weight:300;
+  color:var(--steel);line-height:1.65;
+}
+
+/* ─── CTA / CONTACT ─────────────────────────────────────────── */
+.cta-wrap{
+  background:var(--ink);
+  padding:140px 0 100px;
+  position:relative;overflow:hidden;
+}
+.cta-wrap::before{
+  content:"";position:absolute;right:0;top:0;bottom:0;width:38%;
+  background:repeating-linear-gradient(
+    90deg,
+    transparent,transparent 32px,
+    rgba(255,255,255,.025) 32px,rgba(255,255,255,.025) 33px
+  );
+  pointer-events:none;
+  mask:linear-gradient(to right, transparent, #000);
+  -webkit-mask:linear-gradient(to right, transparent, #000);
+}
+
+.cta-top{
+  max-width:960px;
+  margin-bottom:80px;
+  position:relative;z-index:2;
+}
+.cta-top .label{color:rgba(255,255,255,.5)}
+.cta-top .label::before{background:rgba(255,255,255,.4)}
+.cta-top h2{
+  font-size:clamp(2.4rem,5vw,4.2rem);
+  font-weight:300;color:var(--white);
+  letter-spacing:-.025em;line-height:1;
+  margin-top:28px;
+}
+.cta-top h2 em{color:var(--pine-tint);font-weight:400}
+
+.cta-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:64px;align-items:start;
+  position:relative;z-index:2;
+  max-width:880px;
+}
+.cta-info-p{
+  font-size:18px;font-weight:300;
+  color:rgba(255,255,255,.82);
+  line-height:1.55;max-width:50ch;
+}
+.cta-info-p em{color:var(--white);font-style:italic}
+
+.cta-contact{
+  margin-top:48px;
+  padding-top:32px;
+  border-top:1px solid rgba(255,255,255,.12);
+  display:grid;grid-template-columns:repeat(2,1fr);gap:40px;
+}
+.cta-contact-item h5{
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:12px;
+}
+.cta-contact-item p{
+  font-family:var(--display);font-size:1.2rem;font-weight:400;
+  color:var(--white);letter-spacing:-.01em;line-height:1.35;
+}
+.cta-contact-item a{
+  color:inherit;text-decoration:none;
+  transition:color .25s;
+}
+.cta-contact-item a:hover{color:var(--pine-tint)}
+
+/* form */
+.form{
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.08);
+  padding:36px 32px;
+}
+.form-label-top{
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--pine-bright);margin-bottom:24px;
+  padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.08);
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{margin-bottom:18px}
+.field label{
+  display:block;margin-bottom:8px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);
+}
+.field input,.field textarea{
+  width:100%;padding:14px 16px;
+  border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);
+  color:var(--white);font-family:var(--sans);font-size:15px;
+  transition:border-color .25s,background .25s;outline:none;
+}
+.field input::placeholder,.field textarea::placeholder{color:rgba(255,255,255,.25)}
+.field input:focus,.field textarea:focus{border-color:var(--pine-bright);background:rgba(255,255,255,.05)}
+.form-submit{margin-top:10px}
+.form-submit .btn-primary{width:100%;justify-content:center;padding:16px 28px}
+.form-msg{margin-top:14px;font-size:13px;font-family:var(--mono);letter-spacing:.06em;min-height:18px}
+
+/* ─── FOOTER ────────────────────────────────────────────────── */
+footer{background:var(--ink);border-top:1px solid rgba(255,255,255,.06);position:relative}
+.foot-headline{
+  padding:80px 0 56px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.foot-headline h3{
+  font-family:var(--display);font-weight:300;
+  font-size:clamp(2rem,3.6vw,3rem);
+  color:var(--white);letter-spacing:-.022em;line-height:1.05;
+  max-width:24ch;
+}
+.foot-headline h3 em{color:var(--pine-tint);font-weight:400}
+
+.foot-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;padding:64px 0 48px;border-bottom:1px solid rgba(255,255,255,.07)}
+.foot-brand-row{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.foot-mark{width:34px;height:34px;background:var(--pine);display:flex;align-items:center;justify-content:center;flex:none}
+.foot-name{font-family:var(--display);font-weight:400;font-size:1.2rem;letter-spacing:-.01em;color:var(--white)}
+.foot-name sup{font-size:.62em;color:var(--pewter);vertical-align:super;line-height:0}
+footer .about{font-size:14px;font-weight:300;color:rgba(255,255,255,.42);max-width:34ch;line-height:1.6}
+
+.foot-col h4{
+  font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);margin-bottom:22px;
+}
+.foot-col a{display:block;font-size:14px;color:rgba(255,255,255,.5);margin-bottom:14px;transition:color .2s;font-family:var(--sans)}
+.foot-col a:hover{color:var(--white)}
+
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;padding:28px 0;flex-wrap:wrap;gap:16px}
+.foot-bottom p{font-size:11px;color:rgba(255,255,255,.35);font-family:var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.disclaimer{
+  font-size:11px;color:rgba(255,255,255,.25);line-height:1.7;
+  padding:24px 0 36px;border-top:1px solid rgba(255,255,255,.05);
+  max-width:88ch;
+}
+
+/* ─── REVEAL ANIMATIONS ─────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal-stagger > *{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal-stagger.in > *{opacity:1;transform:none}
+.reveal-stagger.in > *:nth-child(1){transition-delay:.05s}
+.reveal-stagger.in > *:nth-child(2){transition-delay:.15s}
+.reveal-stagger.in > *:nth-child(3){transition-delay:.25s}
+.reveal-stagger.in > *:nth-child(4){transition-delay:.35s}
+.reveal-stagger.in > *:nth-child(5){transition-delay:.45s}
+.reveal-stagger.in > *:nth-child(6){transition-delay:.55s}
+
+/* ─── RESPONSIVE ────────────────────────────────────────────── */
+@media(max-width:1100px){
+  .feat-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-cell:nth-child(1),.stat-cell:nth-child(2){border-bottom:1px solid rgba(255,255,255,.08)}
+  .stat-cell:nth-child(2),.stat-cell:nth-child(4){border-right:none}
+  .stat-cell:nth-child(3),.stat-cell:nth-child(4)::before{display:block}
+  .stat-cell:nth-child(3)::before,.stat-cell:nth-child(4)::before{top:auto;bottom:-1px}
+}
+@media(max-width:900px){
+  .sec{padding:84px 0}
+  .hero{padding:64px 0 80px}
+  .hero-top{flex-direction:column;align-items:flex-start;gap:20px;margin-bottom:40px}
+  .hero-grid,.split,.band-inner,.cta-grid{grid-template-columns:1fr;gap:48px}
+  .hero-visual{order:2}
+  .prob-grid{grid-template-columns:1fr}
+  .prob-card{border-right:none;border-bottom:1px solid rgba(255,255,255,.07)}
+  .pipeline{grid-template-columns:1fr;gap:24px}
+  .pipeline::before{display:none}
+  .pipe-step,.pipe-step + .pipe-step{padding:24px 0;border-left:none;border-top:var(--rule)}
+  .pipe-step:first-child{border-top:none}
+  .feat-grid{grid-template-columns:1fr}
+  .who-grid{grid-template-columns:1fr}
+  .who{border-right:none;border-bottom:var(--rule)}
+  .tag-list{grid-template-columns:1fr}
+  .foot-inner{grid-template-columns:1fr 1fr;gap:36px}
+  .prob-pull{grid-template-columns:1fr;gap:24px}
+  .navlinks{display:none}
+  .navtoggle{display:flex}
+  .navlinks.show{
+    display:flex;flex-direction:column;gap:20px;align-items:flex-start;
+    position:absolute;top:78px;left:0;right:0;
+    background:var(--paper);padding:28px var(--gutter);
+    border-bottom:var(--rule);z-index:99;
+  }
+  .hv-annot{display:none}
+  .chapter{flex-direction:column;align-items:flex-start;gap:14px}
+  .stats-head{flex-direction:column;align-items:flex-start}
+  .cta-contact{grid-template-columns:1fr}
+}
+@media(max-width:540px){
+  .sec{padding:64px 0}
+  .form-row{grid-template-columns:1fr}
+  .hero{padding:48px 0 64px}
+  .cta-wrap{padding:80px 0 64px}
+  .band{padding:80px 0}
+  .stats{padding:64px 0}
+  .stats-grid{grid-template-columns:1fr}
+  .stat-cell{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
+  .stat-cell:last-child{border-bottom:none}
+  .foot-inner{grid-template-columns:1fr}
+  .brand-sub{display:none}
+  .form{padding:24px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══════════════════════════════════════════════════ -->
+<header id="hdr">
+  <div class="wrap">
+    <nav>
+      <a href="#top" class="brand">
+        <div class="brand-mark">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M4 16V4l8 12V4" stroke="#fff" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+          </svg>
+        </div>
+        <span class="brand-name">N<sup>27</sup> Consulting</span>
+        <span class="brand-sub">RDTI Pipeline</span>
+      </a>
+      <div class="navlinks" id="navlinks">
+        <a href="#how">How it works</a>
+        <a href="#features">Capabilities</a>
+        <a href="#outcomes">Outcomes</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact" class="btn btn-primary" style="padding:12px 22px">
+          Request a demo
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10M7 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+        </a>
+      </div>
+      <button class="navtoggle" id="navtoggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+</header>
+<a id="top"></a>
+
+<!-- ═══ HERO ══════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-top reveal">
+      <div class="hero-issue"><b>RDTI Pipeline</b> &nbsp;·&nbsp; Documentation engine &nbsp;·&nbsp; R&amp;D Tax Incentive</div>
+      <div class="hero-issue" style="color:var(--pewter)">N<sup style="font-size:.7em">27</sup> · 2026</div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-copy reveal">
+        <span class="label">Built by R&amp;D consultants, for R&amp;D consultants</span>
+        <h1>Compliant R&amp;D applications, <span class="hl">drafted and audited</span> in a fraction of the time.</h1>
+        <p class="lede">An AI documentation agent built for R&amp;D Tax Incentive consulting firms — so your team produces <em>stronger, more defensible</em> applications without the manual grind.</p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary">
+            Request a demo
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h10M7 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+          </a>
+          <a href="#how" class="btn btn-ghost">See how it works</a>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-meta-item"><b>02</b><span>Stage pipeline</span></div>
+          <div class="hero-meta-item"><b>en-GB</b><span>Compliance enforced</span></div>
+          <div class="hero-meta-item"><b>00</b><span>Fabricated facts</span></div>
+        </div>
+      </div>
+
+      <!-- HERO VISUAL — Audit ledger card -->
+      <div class="hero-visual reveal">
+        <div class="hv-frame">
+          <div class="hv-head">
+            <div style="display:flex;align-items:center;gap:14px">
+              <div class="hv-dots"><span></span><span></span><span></span></div>
+              <span class="hv-filename">RD_Application_v3.docx</span>
+            </div>
+            <span class="hv-status">Audited</span>
+          </div>
+          <div class="hv-body">
+            <div class="hv-section">
+              <div class="hv-section-label"><span>Core Activity · Hypothesis</span> <b>Verified</b></div>
+              <div class="hv-line w-full"></div>
+              <div class="hv-line w-90"></div>
+              <div class="hv-line w-72"></div>
+              <div class="hv-audit">
+                <div class="hv-audit-tick"><svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5L8.5 2" stroke="#0A4227" stroke-width="1.5" stroke-linecap="square"/></svg></div>
+                <div class="hv-audit-text"><b>3 claims</b> &nbsp;cross-checked against source</div>
+              </div>
+            </div>
+            <div class="hv-section">
+              <div class="hv-section-label"><span>Experiment · Results</span> <b>Verified</b></div>
+              <div class="hv-line w-full"></div>
+              <div class="hv-line w-65"></div>
+              <div class="hv-audit">
+                <div class="hv-audit-tick"><svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5L8.5 2" stroke="#0A4227" stroke-width="1.5" stroke-linecap="square"/></svg></div>
+                <div class="hv-audit-text"><b>5 claims</b> &nbsp;cross-checked against source</div>
+              </div>
+            </div>
+            <div class="hv-section">
+              <div class="hv-section-label"><span>Conclusions · New knowledge</span> <b>Verified</b></div>
+              <div class="hv-line w-90"></div>
+              <div class="hv-line w-50"></div>
+            </div>
+          </div>
+          <div class="hv-foot">
+            <span class="hv-foot-text">Submission-ready</span>
+            <span class="hv-foot-link">
+              .docx output
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="#0A4227" stroke-width="1.5" stroke-linecap="square"/></svg>
+            </span>
+          </div>
+        </div>
+        <div class="hv-annot">Every claim · source-anchored</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS BAND ════════════════════════════════════════════ -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-head reveal">
+      <span class="label">What the pipeline guarantees</span>
+      <h3>A disciplined process <em>encoded</em>, not improvised.</h3>
+    </div>
+    <div class="stats-grid reveal-stagger">
+      <div class="stat-cell">
+        <div class="stat-cell-label">Pipeline</div>
+        <span class="stat-num" data-target="2">0</span>
+        <div class="stat-cell-desc">Stages — draft, then a transparent factual audit. Nothing assembled before both pass.</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-label">Source-anchored</div>
+        <span class="stat-num" data-target="100"><span class="counter">0</span><span class="unit">%</span></span>
+        <div class="stat-cell-desc">Of claims cross-referenced to your source materials before assembly.</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-label">Fabrication</div>
+        <span class="stat-num italic" data-target="0">0</span>
+        <div class="stat-cell-desc">Invented facts. Missing data is flagged with a marked placeholder, never papered over.</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-label">Delivery</div>
+        <span class="stat-num" data-target="1">0<span class="unit">click</span></span>
+        <div class="stat-cell-desc">Audited content written straight into the official application template.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROBLEM ═══════════════════════════════════════════════ -->
+<section class="sec problem">
+  <div class="wrap">
+    <div class="chapter reveal">
+      <div class="chapter-no">01<sup>·04</sup></div>
+      <div class="chapter-meta">The bottleneck</div>
+    </div>
+    <div class="sec-head reveal">
+      <span class="label">Why documentation breaks firms</span>
+      <h2>R&amp;D documentation <em>eats</em><br>your margin.</h2>
+      <p>The technical write-up is the most time-consuming, least scalable part of an R&amp;D claim. It is also where claims are won or lost.</p>
+    </div>
+    <div class="prob-grid reveal-stagger">
+      <div class="prob-card">
+        <div class="prob-num">01</div>
+        <h3>Hours that don't scale</h3>
+        <p>Senior consultants spend days drafting and re-checking activity descriptions, hypotheses and experiment write-ups — work that grows linearly with every new client.</p>
+      </div>
+      <div class="prob-card">
+        <div class="prob-num">02</div>
+        <h3>Compliance drift</h3>
+        <p>Character limits, prohibited language, structural rules and en-GB conventions are easy to breach under deadline pressure. One inconsistency with source data can undermine a claim.</p>
+      </div>
+      <div class="prob-card">
+        <div class="prob-num">03</div>
+        <h3>Inconsistent quality</h3>
+        <p>Output quality varies with whoever drafted it and how much time they had. Your firm's standard should not depend on the day of the week.</p>
+      </div>
+    </div>
+    <div class="prob-pull reveal">
+      <span class="label">The hidden cost</span>
+      <blockquote>Your most senior people are spending their best hours on mechanical drafting — when they should be advising.</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ══════════════════════════════════════════ -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="chapter reveal">
+      <div class="chapter-no">02<sup>·04</sup></div>
+      <div class="chapter-meta">How it works</div>
+    </div>
+    <div class="sec-head reveal">
+      <span class="label">The pipeline</span>
+      <h2>A pipeline, <em>not</em> a chatbot.</h2>
+      <p>RDTI Pipeline runs a disciplined two-stage process before assembling the finished document. Each stage is built around how a compliant R&amp;D application actually has to read.</p>
+    </div>
+    <div class="pipeline reveal-stagger">
+      <div class="pipe-step">
+        <div class="pipe-marker">i</div>
+        <div class="pipe-step-label">Step 01 · Draft</div>
+        <h3>Compliant <em>draft</em></h3>
+        <p>The agent drafts every required section — objectives, core activity, hypothesis, experiment, results, conclusions and new knowledge — compliant with language rules, character limits and bullet discipline from the first word. No clean-up pass required.</p>
+        <div class="pipe-step-out">Structured technical content</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-marker">ii</div>
+        <div class="pipe-step-label">Step 02 · Audit</div>
+        <h3>Factual <em>audit</em></h3>
+        <p>Every claim and figure is cross-referenced against your source materials. A visible audit list surfaces every discrepancy, and surgical corrections are applied — so nothing in the document outruns the evidence.</p>
+        <div class="pipe-step-out">Verified against source</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-marker">iii</div>
+        <div class="pipe-step-label">Step 03 · Assemble</div>
+        <h3>Assemble &amp; <em>deliver</em></h3>
+        <p>The audited content is written straight into the formal R&amp;D Tax Incentive application template, with every fillable section populated and formatting preserved. Delivered as a finished Word document, ready for your review and sign-off.</p>
+        <div class="pipe-step-out">Submission-ready .docx</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CAPABILITIES ══════════════════════════════════════════ -->
+<section class="sec cap-wrap" id="features" style="background:var(--white)">
+  <div class="wrap">
+    <div class="chapter reveal">
+      <div class="chapter-no">03<sup>·04</sup></div>
+      <div class="chapter-meta">Capabilities</div>
+    </div>
+    <div class="sec-head reveal">
+      <span class="label">Engineered for compliance</span>
+      <h2>Built for the way<br>R&amp;D claims are <em>judged</em>.</h2>
+    </div>
+    <div class="feat-grid reveal-stagger">
+      <div class="feat">
+        <div class="feat-no"><b>01</b> · Compliance</div>
+        <div class="feat-ic">
+          <svg width="26" height="26" viewBox="0 0 22 22" fill="none"><path d="M3 5.5h16M3 11h10M3 16.5h12" stroke="#0A4227" stroke-width="1.5" stroke-linecap="square"/></svg>
+        </div>
+        <h3>Compliance <em>built in</em></h3>
+        <p>British English, first-person plural voice, prohibited-word filtering, punctuation rules and per-section character limits are enforced as the draft is written — not patched afterwards.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-no"><b>02</b> · Audit</div>
+        <div class="feat-ic">
+          <svg width="26" height="26" viewBox="0 0 22 22" fill="none"><path d="M8 11l2.5 2.5 4.5-5" stroke="#0A4227" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/><rect x="2" y="2" width="18" height="18" stroke="#0A4227" stroke-width="1.5"/></svg>
+        </div>
+        <h3>Transparent factual audit</h3>
+        <p>Every claim is checked against your source documents and presented as an inspectable audit list before the final document is produced. The evidence trail is visible, not hidden.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-no"><b>03</b> · Template</div>
+        <div class="feat-ic">
+          <svg width="26" height="26" viewBox="0 0 22 22" fill="none"><path d="M5 2h9l6 6v12H5V2z" stroke="#0A4227" stroke-width="1.5" stroke-linejoin="miter"/><path d="M14 2v6h6" stroke="#0A4227" stroke-width="1.5" stroke-linejoin="miter"/><path d="M8 12h6M8 15.5h4" stroke="#0A4227" stroke-width="1.5" stroke-linecap="square"/></svg>
+        </div>
+        <h3>Straight into the template</h3>
+        <p>Output lands in the official R&amp;D Tax Incentive application format, every fillable section populated, formatting preserved — paragraphs, bullets and bold labels intact.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-no"><b>04</b> · Integrity</div>
+        <div class="feat-ic">
+          <svg width="26" height="26" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="#0A4227" stroke-width="1.5"/><path d="M11 7v4.5l3 2" stroke="#0A4227" stroke-width="1.5" stroke-linecap="square"/></svg>
+        </div>
+        <h3>No <em>invented</em> data</h3>
+        <p>Where source material is missing, the agent inserts a clearly marked placeholder instead of fabricating content — gaps are surfaced for your team, never papered over.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-no"><b>05</b> · Coverage</div>
+        <div class="feat-ic">
+          <svg width="26" height="26" viewBox="0 0 22 22" fill="none"><rect x="2" y="4" width="18" height="14" stroke="#0A4227" stroke-width="1.5"/><path d="M2 8.5h18M7 8.5v9.5" stroke="#0A4227" stroke-width="1.5" stroke-linecap="square"/></svg>
+        </div>
+        <h3>Supporting activities handled</h3>
+        <p>Core activities and every linked supporting activity are drafted and fact-checked as separate blocks — none silently dropped, each held to the same standard.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-no"><b>06</b> · Consistency</div>
+        <div class="feat-ic">
+          <svg width="26" height="26" viewBox="0 0 22 22" fill="none"><path d="M11 2l2.2 6.8H20l-5.6 4 2.1 6.5L11 15.3 5.5 19.3l2.1-6.5L2 8.8h6.8L11 2z" stroke="#0A4227" stroke-width="1.5" stroke-linejoin="miter"/></svg>
+        </div>
+        <h3>Your standard, <em>every time</em></h3>
+        <p>The same disciplined output regardless of who runs it or how busy the week is. Quality stops being a function of available capacity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OUTCOMES ══════════════════════════════════════════════ -->
+<section class="sec" id="outcomes" style="background:var(--paper)">
+  <div class="wrap">
+    <div class="chapter reveal">
+      <div class="chapter-no">04<sup>·04</sup></div>
+      <div class="chapter-meta">What changes</div>
+    </div>
+    <div class="sec-head reveal">
+      <span class="label">Outcomes</span>
+      <h2>Stronger applications.<br><em>Far less</em> time.</h2>
+    </div>
+    <div class="split">
+      <ul class="checklist reveal-stagger">
+        <li>
+          <span class="cl-mark"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 6.5l3 3 5-6" stroke="#0A4227" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/></svg></span>
+          <div><h4>Reclaim <em>senior</em> time</h4><p>Move your most experienced people off mechanical drafting and onto advisory work that grows the firm.</p></div>
+        </li>
+        <li>
+          <span class="cl-mark"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 6.5l3 3 5-6" stroke="#0A4227" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/></svg></span>
+          <div><h4>Defensible by <em>design</em></h4><p>An auditable evidence trail and consistent compliance make every claim easier to stand behind if questioned.</p></div>
+        </li>
+        <li>
+          <span class="cl-mark"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 6.5l3 3 5-6" stroke="#0A4227" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/></svg></span>
+          <div><h4>Take on <em>more</em> clients</h4><p>Capacity stops being capped by drafting hours. Scale the practice without scaling the late nights.</p></div>
+        </li>
+        <li>
+          <span class="cl-mark"><svg width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 6.5l3 3 5-6" stroke="#0A4227" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/></svg></span>
+          <div><h4>You stay in <em>control</em></h4><p>RDTI Pipeline drafts and assembles. Your consultants review, refine and sign off. The judgement remains yours.</p></div>
+        </li>
+      </ul>
+      <div class="comp-panel reveal">
+        <div class="comp-head">
+          <span class="comp-head-label">Per application — illustrative</span>
+          <span class="comp-head-meta">Before · After</span>
+        </div>
+        <div class="comp-row"><span>First compliant draft</span><div class="comp-vals"><span class="comp-before">1–2 days</span><span class="comp-after">minutes</span></div></div>
+        <div class="comp-row"><span>Factual cross-check</span><div class="comp-vals"><span class="comp-before">manual</span><span class="comp-after">automated</span></div></div>
+        <div class="comp-row"><span>Template formatting</span><div class="comp-vals"><span class="comp-before">manual</span><span class="comp-after">1 click</span></div></div>
+        <div class="comp-row"><span>Compliance review</span><div class="comp-vals"><span class="comp-before">per draft</span><span class="comp-after">built in</span></div></div>
+        <div class="comp-row"><span>Output consistency</span><div class="comp-vals"><span class="comp-after">standardised</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DISCIPLINE BAND ═══════════════════════════════════════ -->
+<section class="band">
+  <div class="wrap">
+    <div class="band-inner">
+      <div class="reveal">
+        <span class="label">Built on discipline, not hype</span>
+        <h2>The rules of a good claim, <em>encoded</em>.</h2>
+        <p>RDTI Pipeline does not replace your professional judgement — it enforces the structural and evidentiary discipline a strong application demands, so your team starts from a compliant, fact-checked foundation every time.</p>
+      </div>
+      <div class="reveal">
+        <div class="tag-list">
+          <span class="tag">Character limits</span>
+          <span class="tag">en-GB language</span>
+          <span class="tag">Prohibited-word filter</span>
+          <span class="tag">Source-anchored claims</span>
+          <span class="tag">Competent professional test</span>
+          <span class="tag">Hypothesis &amp; experiment</span>
+          <span class="tag">Zero fabricated data</span>
+          <span class="tag">Bullet discipline</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHO IT'S FOR ══════════════════════════════════════════ -->
+<section class="sec who-wrap" id="who">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="label">Who it's for</span>
+      <h2>Made for R&amp;D <em>consulting firms</em>.</h2>
+    </div>
+    <div class="who-grid reveal-stagger">
+      <div class="who">
+        <div class="who-no">i</div>
+        <h3>Boutique R&amp;D practices</h3>
+        <p>Punch above your headcount. Deliver large-firm consistency without large-firm overheads.</p>
+      </div>
+      <div class="who">
+        <div class="who-no">ii</div>
+        <h3>Growing advisory firms</h3>
+        <p>Add documentation capacity without adding drafting bottlenecks as your client base expands.</p>
+      </div>
+      <div class="who">
+        <div class="who-no">iii</div>
+        <h3>Established consultancies</h3>
+        <p>Standardise quality across teams and offices. Free senior staff for higher-value advisory work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══════════════════════════════════════════════════ -->
+<section class="sec" id="faq" style="background:var(--paper)">
+  <div class="wrap">
+    <div class="sec-head reveal" style="max-width:880px;margin:0 auto 64px">
+      <span class="label">Questions</span>
+      <h2>What firms <em>ask first</em>.</h2>
+    </div>
+    <div class="faq-wrap reveal">
+      <div class="qa">
+        <button>Does RDTI Pipeline replace our consultants?<span class="qicon"></span></button>
+        <div class="ans"><div class="ans-inner"><p>No. RDTI Pipeline handles the mechanical drafting, fact-checking and formatting. Your consultants supply the source materials, review the output, apply professional judgement and sign off. It is built to make your experts faster and more consistent, not to remove them from the process.</p></div></div>
+      </div>
+      <div class="qa">
+        <button>How does it keep claims defensible?<span class="qicon"></span></button>
+        <div class="ans"><div class="ans-inner"><p>Two ways. First, it produces a visible audit list cross-referencing every claim against your source materials, so the evidence trail is inspectable before the final document is produced. Second, where data is missing it inserts a marked placeholder rather than inventing content, surfacing gaps instead of hiding them.</p></div></div>
+      </div>
+      <div class="qa">
+        <button>What does it actually produce?<span class="qicon"></span></button>
+        <div class="ans"><div class="ans-inner"><p>A completed R&amp;D Tax Incentive application document in the official template, with every section populated — project objectives, core and supporting activities, hypothesis, experiment, results, conclusions and new knowledge — plus the audit list documenting the fact-check. Delivered as a Word document.</p></div></div>
+      </div>
+      <div class="qa">
+        <button>Will it fit how our firm already works?<span class="qicon"></span></button>
+        <div class="ans"><div class="ans-inner"><p>RDTI Pipeline slots into your existing intake and review workflow. Your team gathers source materials as they do today, runs them through the agent, and reviews a finished draft instead of starting from a blank page. We will walk through the fit for your specific process during a demo.</p></div></div>
+      </div>
+      <div class="qa">
+        <button>How do we get started?<span class="qicon"></span></button>
+        <div class="ans"><div class="ans-inner"><p>Request a demo below. We will run the full pipeline on a sample R&amp;D activity, end to end, so you can see exactly what your team will be working with.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA / CONTACT ═════════════════════════════════════════ -->
+<section class="cta-wrap" id="contact">
+  <div class="wrap">
+    <div class="cta-top reveal">
+      <span class="label">Get started</span>
+      <h2>See RDTI Pipeline on <em>one of your own</em> activities.</h2>
+    </div>
+    <div class="cta-grid">
+      <div class="reveal">
+        <p class="cta-info-p"><em>Book a walkthrough</em> and we will run the full pipeline end to end on a sample R&amp;D activity — so you can see the output before committing to anything.</p>
+        <div class="cta-contact">
+          <div class="cta-contact-item">
+            <h5>Studio</h5>
+            <p>N<sup style="font-size:.62em;color:var(--pewter);vertical-align:super">27</sup> Consulting<br>Melbourne, Australia</p>
+          </div>
+          <div class="cta-contact-item">
+            <h5>Direct</h5>
+            <p><a href="tel:+61429885227">Nick Watson&nbsp;&nbsp;|&nbsp;&nbsp;0429 885 227</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════════ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-headline reveal">
+      <h3>Structure, strategy, <em>clarity</em>.<br>Made for the work R&amp;D firms actually do.</h3>
+    </div>
+    <div class="foot-inner">
+      <div>
+        <div class="foot-brand-row">
+          <div class="foot-mark">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+              <path d="M4 16V4l8 12V4" stroke="#fff" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter"/>
+            </svg>
+          </div>
+          <span class="foot-name">N<sup>27</sup> Consulting</span>
+        </div>
+        <p class="about">An AI documentation agent for R&amp;D Tax Incentive consulting firms. Draft, audit and assemble compliant applications.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Product</h4>
+        <a href="#how">How it works</a>
+        <a href="#features">Capabilities</a>
+        <a href="#outcomes">Outcomes</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="#contact">Request a demo</a>
+        <a href="#contact">Contact</a>
+        <a href="#who">Who it's for</a>
+      </div>
+      <div class="foot-col">
+        <h4>Studio</h4>
+        <a href="#">Melbourne · Australia</a>
+        <a href="tel:+61429885227">Nick Watson · 0429 885 227</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© <span id="yr"></span> N27 Consulting Pty Ltd</p>
+      <p>Structure · Strategy · Clarity</p>
+    </div>
+    <p class="disclaimer">RDTI Pipeline is a documentation and workflow tool. It does not provide tax advice and does not determine eligibility for the R&amp;D Tax Incentive. Responsibility for the accuracy, eligibility and lodgement of any application remains with the consulting firm and its clients. Outputs should be reviewed by a qualified professional before submission.</p>
+  </div>
+</footer>
+
+<script>
+  // sticky nav
+  const hdr=document.getElementById('hdr');
+  addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>10));
+
+  // mobile nav
+  const tgl=document.getElementById('navtoggle'),nl=document.getElementById('navlinks');
+  tgl.addEventListener('click',()=>nl.classList.toggle('show'));
+  nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nl.classList.remove('show')));
+
+  // scroll reveal
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  }),{threshold:.08, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>io.observe(el));
+
+  // animated counters
+  const counterIo=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      const el=entry.target;
+      const target=parseInt(el.dataset.target,10);
+      const counterSpan=el.querySelector('.counter') || el;
+      const isWrappedCounter = !!el.querySelector('.counter');
+      const duration=1400;
+      const start=performance.now();
+      const startVal=0;
+      const ease=t=>1-Math.pow(1-t,3);
+      function step(now){
+        const t=Math.min((now-start)/duration,1);
+        const v=Math.round(startVal+(target-startVal)*ease(t));
+        if(isWrappedCounter){
+          counterSpan.textContent=v;
+        } else {
+          // preserve any .unit child
+          const unit=el.querySelector('.unit');
+          el.childNodes[0].nodeValue = v;
+          if(unit && !el.contains(unit)) el.appendChild(unit);
+        }
+        if(t<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      counterIo.unobserve(el);
+    });
+  },{threshold:.4});
+  document.querySelectorAll('[data-target]').forEach(el=>counterIo.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.qa button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const qa=b.parentElement,ans=qa.querySelector('.ans'),open=qa.classList.contains('open');
+      document.querySelectorAll('.qa').forEach(o=>{
+        o.classList.remove('open');
+        o.querySelector('.ans').style.maxHeight=null;
+      });
+      if(!open){
+        qa.classList.add('open');
+        ans.style.maxHeight=ans.scrollHeight+'px';
+      }
+    });
+  });
+
+  // form
+  // (form removed — direct contact via tel: link)
+
+  document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
